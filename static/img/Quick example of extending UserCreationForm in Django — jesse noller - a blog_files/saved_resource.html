@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!-- saved from url=(0515)http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#2 -->
+<html lang="en" dir="ltr" class="js no-touch localstorage sessionstorage contenteditable use-opacity-transitions"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="http://referrer.disqus.com/juggler/event.js?experiment=default&variant=control&product=embed&thread=950838657&forum=pyjesse&forum_id=1107&zone=thread&version=f2d533a2&page_url=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&page_referrer=https%3A%2F%2Fwww.google.com.co%2F&user_id=134181975&verb=view&object_type=product&object_id=embed&event=activity&imp=7knl7t637lj3sp&prev_imp=7knkfk4218lsb6&section=default&area=n%2Fa"></script>
+    <title>Disqus Comments</title>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+    <style>
+        html {
+            overflow: hidden;
+        }
+        
+    </style>
+
+<link rel="stylesheet" href="http://a.disquscdn.com/next/styles/lounge.8ccc926b6e544456c3fb32e785caf070.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="remote/config" src="config.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="common.bundle" src="common.eece4a5c6caeeded5240ae1228484b19.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lounge.bundle" src="lounge.3cef8941375bcbb3351280d2b02e692d.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="http://www.google-analytics.com/ga.js" src="ga.js"></script><style id="css_1418237471525"></style><!--<base target="_parent">--><base href="." target="_parent"><script src="http://referrer.disqus.com/juggler/event.js?thread_slug=quick_example_of_extending_usercreationform_in_django_32&user_type=unverified&referrer=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&theme=next&dnt=0&tracking_enabled=1&organic_enabled=true&promoted_enabled=true&max_enabled=true&thumbnails_enabled=true&event=init_embed&thread=950838657&forum=pyjesse&forum_id=1107&user_id=134181975&imp=7knl7t637lj3sp&prev_imp=7knkfk4218lsb6" async="" charset="UTF-8"></script><link rel="stylesheet" href="http://a.disquscdn.com/next/styles/discovery.c299e37422569a91c0e57e7bb42885cd.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="discovery/main" src="discovery.06ceb6e7f25bc059985458e209f96406.js"></script><script src="http://referrer.disqus.com/juggler/event.js?major_version=midway&internal_organic=0&external_organic=0&promoted=0&display=false&placement=bottom&promoted_ids=%5B%5D&event=init_discovery&thread=950838657&forum=pyjesse&forum_id=1107&user_id=134181975&imp=7knl7t637lj3sp&prev_imp=7knkfk4218lsb6" async="" charset="UTF-8"></script><script src="event.js" async="" charset="UTF-8"></script></head>
+<body>
+    
+    <!--[if lte IE 8]>
+<script src="//a.disquscdn.com/1417819391/build/vendor/ie8.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<script src="//a.disquscdn.com/1417819391/build/vendor/ie9.js"></script>
+<![endif]-->
+
+    
+<script type="text/json" id="disqus-urls">{
+    "root":"//disqus.com",
+    "next":"//a.disquscdn.com/next/f2d533a2"
+}</script>
+
+    
+
+    <div id="error" style="display:none; text-align: center">
+        <p>We were unable to load Disqus. If you are a moderator please see our <a href="http://docs.disqus.com/help/83/"> troubleshooting guide</a>. </p>
+    </div>
+
+    
+    <script type="text/json" id="disqus-forumData">{"session":{"isReadOnly":false,"canModerate":false,"audienceSyncVerified":false,"canReply":true,"mustVerifyEmail":false},"features":{},"forum":{"category":null,"description":null,"founder":"1777","settings":{"canEnableSponsoredComments":false,"discoveryVariant":"max","allowAnonPost":false,"allowMedia":true,"moderatorText":null,"typeface":"auto","disable3rdPartyTrackers":false,"promotedDiscoveryEnabled":true,"discoveryMax":true,"ssoRequired":false,"discoveryLocked":false,"audienceSyncEnabled":false,"hasCustomAvatar":false,"organicDiscoveryEnabled":true,"discoverySettingsUrl":"https://pyjesse.disqus.com/admin/settings/ads/","discoveryThumbnailsEnabled":true,"colorScheme":"auto","sponsoredCommentsEnabled":false,"linkAffiliationEnabled":true},"url":"http://www.jessenoller.com/","guidelines":null,"favicon":{"permalink":"http://disqus.com/api/forums/favicons/pyjesse.jpg","cache":"//a.disquscdn.com/1417819391/images/favicon-default.png"},"language":"en","avatar":{"small":{"permalink":"http://disqus.com/api/forums/avatars/pyjesse.jpg?size=32","cache":"//a.disquscdn.com/1417819391/images/noavatar32.png"},"large":{"permalink":"http://disqus.com/api/forums/avatars/pyjesse.jpg?size=92","cache":"//a.disquscdn.com/1417819391/images/noavatar92.png"}},"pk":1107,"raw_guidelines":null,"id":"pyjesse","channel":null,"name":"jessenoller.com"}}</script>
+
+    
+    <script type="text/json" id="disqus-threadData">{"cursor":{"hasPrev":false,"prev":null,"total":0,"hasNext":false,"next":"1:0:0"},"code":0,"response":{"lastModified":1395433982,"posts":[],"thread":{"feed":"https://pyjesse.disqus.com/quick_example_of_extending_usercreationform_in_django_32/latest.rss","uploadAdd":"//pyjesse.disqus.com/thread/quick_example_of_extending_usercreationform_in_django_32/async_media_upload/","identifiers":[],"dislikes":0,"likes":4,"message":"","id":"950838657","isDeleted":false,"category":"1110","clean_title":"Quick example of extending UserCreationForm in Django","userScore":0,"userSubscription":false,"createdAt":"2012-11-30T04:56:34","hasStreaming":false,"uploadRemove":"//pyjesse.disqus.com/thread/quick_example_of_extending_usercreationform_in_django_32/async_media_remove/","raw_message":"","isClosed":true,"link":"http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django","slug":"quick_example_of_extending_usercreationform_in_django_32","forum":"pyjesse","author":"1777","posts":0,"moderators":[1777],"title":"Quick example of extending UserCreationForm in Django","highlightedPost":null}},"order":"asc"}</script>
+
+    
+
+    <div id="fixed-content"></div>
+
+    <script src="lounge.load.js" id="bootstrap-script" data-app="lounge"></script>
+
+
+<div id="layout" data-tracking-area="layout"><div class="alert"><a class="close" data-action="dismiss" title="Dismiss">×</a>
+<span>
+Comments for this thread are now closed.
+</span>
+</div>
+
+<div id="discovery-top" data-tracking-area="discovery-north"></div>
+
+<div id="onboard" data-tracking-area="onboard"></div>
+
+<div id="highlighted-post" data-tracking-area="highlighted" class="highlighted-post" style="display: none;"></div>
+
+<header id="main-nav" data-tracking-area="main-nav">
+<nav class="nav nav-primary">
+<ul>
+<li class="tab-conversation active">
+<a href="https://disqus.com/home/discussions/pyjesse/quick_example_of_extending_usercreationform_in_django_32/" data-role="post-count" class="publisher-nav-color" data-nav="conversation"><span class="comment-count">
+0 comments
+</span>
+
+<span class="comment-count-placeholder">
+Comments
+</span>
+</a>
+</li>
+<li class="tab-community">
+<a href="https://disqus.com/home/forums/pyjesse/" class="publisher-nav-color" data-action="community-sidebar" data-forum="pyjesse" id="community-tab">
+<span class="community-name">
+<strong>jessenoller.com</strong>
+
+</span>
+
+<strong class="community-name-placeholder">Community</strong>
+</a>
+</li>
+<li class="dropdown user-menu" data-role="logout"><a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" class="dropdown-toggle" data-toggle="dropdown">
+<span class="dropdown-toggle-wrapper">
+
+<span class="avatar">
+<img data-role="user-avatar" data-user="134181975" alt="Avatar" src="avatar92.jpg">
+</span>
+<span class="username" data-role="username" data-user="134181975">
+Andrés Castillo
+</span>
+
+</span> <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li>
+<a href="https://disqus.com/home/user/disqus_gUYPGBGJv1/" data-role="user-profile-link" data-action="profile" data-user="134181975" data-username="disqus_gUYPGBGJv1">
+Your Profile
+</a>
+</li>
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" class="media-toggle-on" data-action="toggle-media">Display Media</a>
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" class="media-toggle-off" data-action="toggle-media">Hide Media</a>
+</li>
+<li>
+<a href="http://disqus.com/account/">Edit Settings</a>
+</li>
+
+
+
+<li>
+<a href="http://disqus.com/logout/?redirect=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django" data-action="logout">Logout</a>
+</li>
+</ul>
+</li>
+<li class="notification-menu" data-role="notification-menu"><a href="https://disqus.com/home/inbox/" class="notification-container" data-action="home" data-home-path="inbox">
+<span class="notification-icon icon-comment"></span>
+<span class="notification-count" data-role="notification-count"></span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+
+
+
+<section id="conversation" data-role="main" data-tracking-area="main">
+<div class="nav nav-secondary" data-tracking-area="secondary-nav">
+<ul>
+<li data-role="post-sort" class="dropdown sorting">
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" class="dropdown-toggle" data-nav="conversation" data-toggle="dropdown">
+
+
+Sort by Oldest
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="sort" data-sort="popular">Best<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="sort" data-sort="desc">Newest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li class="selected">
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="sort" data-sort="asc">Oldest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+</ul>
+</li>
+
+<li id="thread-votes" class="favorite pull-right">
+<!-- rendered dynamically -->
+<div class="thread-likes" data-role="vote-button"><a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="upvote" title="Favorite this discussion">
+<span class="label">Favorite</span>
+<span class="icon-star"></span>
+<span class="icon-check"></span>
+</a>
+</div></li>
+
+<li id="thread-share-menu" class="dropdown share-menu">
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" class="dropdown-toggle" data-toggle="dropdown" title="Share">
+<span class="label">Share</span> <span class="icon-export"></span>
+</a>
+<ul class="share-menu dropdown-menu pull-right">
+<li class="share">Share this discussion on
+<ul>
+<li class="twitter">
+<a data-action="share:twitter" href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#">Twitter</a>
+</li>
+<li class="facebook">
+<a data-action="share:facebook" href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#">Facebook</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="posts">
+<div id="form"></div>
+
+<button class="alert realtime" style="display: none;" data-role="realtime-notification">
+</button>
+
+<div id="no-posts" style="">Be the first to comment.</div>
+
+<ul id="post-list" class="post-list"></ul>
+
+<div class="load-more" data-role="more" style="display: none;">
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="more-posts" class="btn">Load more comments</a>
+</div>
+</div>
+
+</section>
+
+<section id="community" data-tracking-area="main" style="display:none" data-role="main" data-outbound-link="embed:community">
+</section>
+
+<section id="dashboard" style="display:none" data-role="main" data-tracking-area="main">
+<p style="line-height: 1.4">Nothing for you here ... yet. But as you comment with Disqus and follow
+other Disqus users, you will start to receive notifications here, as well as a personalized
+feed of activity by you and the people you follow. So get out there and participate in
+some discussions!</p>
+</section>
+
+<section id="profile" style="display:none" data-role="main" data-tracking-area="main">
+</section>
+
+<div id="discovery" data-tracking-area="discovery-south"></div>
+
+<div id="footer" data-tracking-area="footer">
+<ul>
+<li class="logo"><a href="http://disqus.com/" title="Powered by Disqus">Powered by Disqus</a></li>
+<li id="thread-subscribe-button" class="email"> 
+<div class="default">
+<a href="http://disqus.com/embed/comments/?base=default&disqus_version=f2d533a2&f=pyjesse&t_u=http%3A%2F%2Fjessenoller.com%2Fblog%2F2011%2F12%2F19%2Fquick-example-of-extending-usercreationform-in-django&t_d=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&t_t=%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20Quick%20example%20of%20extending%20UserCreationForm%20in%20Django%0A%20%20%20%20%20%20%0A%20%20%20%20&s_o=default#" data-action="subscribe" title="Subscribe and get email updates from this discussion"><i aria-hidden="true" class="icon-mail"></i><span class="clip">Subscribe</span> <i aria-hidden="true" class="icon-checkmark"></i></a>
+</div>
+<div class="form">
+<div class="input-wrapper"><input id="thread-subscribe-email" type="email" placeholder="yourname@email.com"></div>
+</div>
+</li>
+<li class="install">
+<a href="https://disqus.com/websites/?utm_source=pyjesse&utm_medium=Disqus-Footer" target="_blank">
+<i aria-hidden="true" class="icon-disqus"></i>
+<span class="clip">Add Disqus to your site</span>
+</a>
+</li>
+<li class="privacy">
+<a href="https://help.disqus.com/customer/portal/articles/1657951?utm_source=disqus&utm_medium=embed-footer&utm_content=privacy-btn" target="_blank">
+<i aria-hidden="true" class="icon-privacy"></i>
+<span class="clip">Privacy</span>
+</a>
+</li>
+</ul>
+</div>
+</div></body></html>

@@ -1,0 +1,21 @@
+-Añadir Logo UV al banner
+-Gestión de Proyectos
+	-Crear Proyectos
+	-Eliminar 
+	-Modificar(Borrar y crear nuevo)
+	-Ver proyectos (Públicos y Mis Proyectos)  
+	
+Proyecto (Visibilidad){
+	Resumen
+	Calificación 	
+}
+
+-Prinicipal
+	Búsqueda
+	Análisis
+	Visualización{
+		indicadores
+		mapas (red etc...)
+	}
+
+

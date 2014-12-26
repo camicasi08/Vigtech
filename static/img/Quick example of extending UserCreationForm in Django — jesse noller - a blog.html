@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope="" itemtype="http://schema.org/Article" class="squarespace-cameron yui3-js-enabled js flexbox canvas canvastext webgl no-touch hashchange history draganddrop rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms no-csstransforms3d csstransitions video audio svg inlinesvg svgclippaths wf-proximanova-i4-inactive wf-proximanova-i7-inactive wf-proximanova-i3-inactive wf-proximanova-i9-inactive wf-proximanova-n1-inactive wf-proximanova-n3-inactive wf-proximanova-n4-inactive wf-proximanova-n6-inactive wf-proximanova-n7-inactive wf-proximanova-n8-inactive wf-proximanova-n9-inactive wf-proximanova-i8-inactive wf-proximanova-i6-inactive wf-inactive" lang="en-US" style=""><div id="yui3-css-stamp" style="position: absolute !important; visibility: hidden !important"></div><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- This is Squarespace. --><!-- jessenoller -->
+<script charset="utf-8" id="yui_3_17_2_1_1418237463933_158" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/count.js"></script><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1418237463933_163" href="http://static.squarespace.com/universal/styles-compressed/dialog-6c5a3bc6fdc8c72f59ee9a31f0e0e24b-min.css"><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1418237463933_164" href="http://static.squarespace.com/universal/styles-compressed/comments-43a1855a99a59f110df06723ecf225c7-min.css"><script charset="utf-8" id="yui_3_17_2_1_1418237463933_161" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/dialog-f8fd100a225e287465f9a2e4e6723495-min.js"></script><script charset="utf-8" id="yui_3_17_2_1_1418237463933_162" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/comments-81e4a3e332c86b01d3775efb218affa3-min.js"></script><script charset="utf-8" id="yui_3_17_2_1_1418237463933_272" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/embed.js"></script><!--<base href="">--><base href=".">
+<meta charset="utf-8">
+<title>Quick example of extending UserCreationForm in Django — jesse noller - a blog</title>
+<link rel="shortcut icon" type="image/x-icon" href="http://jessenoller.com/favicon.ico">
+<link rel="canonical" href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/Quick example of extending UserCreationForm in Django — jesse noller - a blog.html">
+<meta property="og:site_name" content="jesse noller - a blog">
+<meta property="og:title" content="Quick example of extending UserCreationForm in Django">
+<meta property="og:url" content="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django">
+<meta property="og:type" content="article">
+<meta property="og:description" content="I just banged my head against this, and with no good answers floating 
+around out there, I thought I&#39;d share. In my case, I just wanted to extend 
+the basic django.contrib.auth.forms.UserCreationForm in order to make it so 
+when a user was added, an email address had to be supplied in addition to 
+the username and password fields.
+
+Here is a working example (forms.py) - just so I don&#39;t forget it:
+
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class UserCreateForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = (&quot;username&quot;, &quot;email&quot;, &quot;password1&quot;, &quot;password2&quot;)
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data[&quot;email&quot;]
+        if commit:
+            user.save()
+        return user
+
+You have to modify the save method on the form to add the email to user 
+object returned by the super call. You can use this to expose other fields 
+on the User object as needed.">
+<meta property="og:image" content="http://static.squarespace.com/static/50b76babe4b05c3cd8bab78a/t/52f6d3c3e4b0b0787cdf2bf8/1417435076183/?format=1000w">
+<meta itemprop="name" content="Quick example of extending UserCreationForm in Django">
+<meta itemprop="url" content="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django">
+<meta itemprop="description" content="I just banged my head against this, and with no good answers floating 
+around out there, I thought I&#39;d share. In my case, I just wanted to extend 
+the basic django.contrib.auth.forms.UserCreationForm in order to make it so 
+when a user was added, an email address had to be supplied in addition to 
+the username and password fields.
+
+Here is a working example (forms.py) - just so I don&#39;t forget it:
+
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class UserCreateForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = (&quot;username&quot;, &quot;email&quot;, &quot;password1&quot;, &quot;password2&quot;)
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data[&quot;email&quot;]
+        if commit:
+            user.save()
+        return user
+
+You have to modify the save method on the form to add the email to user 
+object returned by the super call. You can use this to expose other fields 
+on the User object as needed.">
+<meta itemprop="thumbnailUrl" content="http://static.squarespace.com/static/50b76babe4b05c3cd8bab78a/t/52f6d3c3e4b0b0787cdf2bf8/1417435076183/?format=1000w">
+<link rel="image_src" href="http://static.squarespace.com/static/50b76babe4b05c3cd8bab78a/t/52f6d3c3e4b0b0787cdf2bf8/1417435076183/?format=1000w">
+<meta itemprop="image" content="http://static.squarespace.com/static/50b76babe4b05c3cd8bab78a/t/52f6d3c3e4b0b0787cdf2bf8/1417435076183/?format=1000w">
+<meta name="description" content="">
+<script type="text/javascript" async="" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/ga.js"></script><script type="text/javascript">SQUARESPACE_ROLLUPS = {};</script>
+<script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//static.squarespace.com/universal/scripts-compressed/common-2d9c32adf508d5615c1b5ecefaba198e-min.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common');</script>
+<script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//static.squarespace.com/universal/scripts-compressed/commerce-8784a0008225b4fd697111a9431ed056-min.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-commerce');</script>
+<script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].css = ["//static.squarespace.com/universal/styles-compressed/commerce-cbf0c0a1c618334da0e095f6bcae2d39-min.css"]; })(SQUARESPACE_ROLLUPS, 'squarespace-commerce');</script>
+<script type="text/javascript" data-sqs-type="dynamic-assets-loader">(function() {(function(a){try{if(window.top!=window&&window.top.Squarespace&&window.top.Squarespace.frameAvailable){window.top.Squarespace.frameAvailable(window,SQUARESPACE_ROLLUPS);return}}catch(d){console.error(d)}window.__dynamicAssetLoaderErrorLogger=function(a){var b=new XMLHttpRequest;b.open("GET","/api/rollups/error?path="+encodeURIComponent(a.src||a.href)+"&page="+encodeURIComponent(window.location.href),!0);b.send()};for(var c in a){if(a[c].js)for(var b=0;b<a[c].js.length;b++)document.write('<script type="text/javascript" src="'+
+a[c].js[b]+'" onerror="__dynamicAssetLoaderErrorLogger(this)">\x3c/script>');if(a[c].css)for(b=0;b<a[c].css.length;b++)document.write('<link rel="stylesheet" type="text/css" href="'+a[c].css[b]+'" onerror="__dynamicAssetLoaderErrorLogger(this)" />')}})(SQUARESPACE_ROLLUPS);
+})();</script><script type="text/javascript" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/common-2d9c32adf508d5615c1b5ecefaba198e-min.js" onerror="__dynamicAssetLoaderErrorLogger(this)"></script><script type="text/javascript" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/commerce-8784a0008225b4fd697111a9431ed056-min.js" onerror="__dynamicAssetLoaderErrorLogger(this)"></script><link rel="stylesheet" type="text/css" href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/commerce-cbf0c0a1c618334da0e095f6bcae2d39-min.css" onerror="__dynamicAssetLoaderErrorLogger(this)">
+<script>Static.SQUARESPACE_CONTEXT = {"rollups":{"squarespace-audio-player":{"css":"//static.squarespace.com/universal/styles-compressed/audio-player-3d296132f5773d0024056c9449cffd92-min.css","js":"//static.squarespace.com/universal/scripts-compressed/audio-player-a33dc0dcbfb8acf7b97a44d24944de65-min.js"},"squarespace-calendar-block-renderer":{"css":"//static.squarespace.com/universal/styles-compressed/calendar-block-renderer-edb9ea58c015fca447b97a2948a5c589-min.css","js":"//static.squarespace.com/universal/scripts-compressed/calendar-block-renderer-e1db8ee387298b95f8b521ea202d5fa4-min.js"},"squarespace-comments":{"css":"//static.squarespace.com/universal/styles-compressed/comments-43a1855a99a59f110df06723ecf225c7-min.css","js":"//static.squarespace.com/universal/scripts-compressed/comments-81e4a3e332c86b01d3775efb218affa3-min.js"},"squarespace-dialog":{"css":"//static.squarespace.com/universal/styles-compressed/dialog-6c5a3bc6fdc8c72f59ee9a31f0e0e24b-min.css","js":"//static.squarespace.com/universal/scripts-compressed/dialog-f8fd100a225e287465f9a2e4e6723495-min.js"},"squarespace-events-collection":{"css":"//static.squarespace.com/universal/styles-compressed/events-collection-edb9ea58c015fca447b97a2948a5c589-min.css","js":"//static.squarespace.com/universal/scripts-compressed/events-collection-b305e9d0613e2bace43cbe4f787e1893-min.js"},"squarespace-pinterest":{"css":"//static.squarespace.com/universal/styles-compressed/pinterest-d41d8cd98f00b204e9800998ecf8427e-min.css","js":"//static.squarespace.com/universal/scripts-compressed/pinterest-67073476a1985644e993d4d017d79a71-min.js"}},"pageType":50,"website":{"id":"50b76babe4b05c3cd8bab78a","identifier":"jessenoller","contentModifiedOn":1417435076183,"cloneable":false,"siteStatus":{},"language":"en-US","timeZone":"America/Monterrey","machineTimeZoneOffset":-21600000,"timeZoneOffset":-21600000,"timeZoneAbbr":"CST","siteTitle":"jesse noller - a blog","siteTagLine":"python, programming, technology & stuff.","siteDescription":"<p>Python Programmer &amp; core developer, <a target=\"_blank\" href=\"http://www.python.org/psf/\">Python Software Foundation Director</a>. Chair of PyCon <a target=\"_blank\" href=\"http://us.pycon.org\">2012 &amp; 201</a><a target=\"_blank\" href=\"http://us.pycon.org\"><u>3</u></a>. Many other numerous Python community &amp; advocacy projects as well.&nbsp;Involved in Developer Experience, developer outreach &amp; marketing and OpenStack development.&nbsp;Proud father of two girls and husband, Principle Engineer/Developer Advocate at <a href=\"#\">Rackspace</a>.</p>","location":{"mapZoom":11.0,"mapLat":29.4241219,"mapLng":-98.49362819999999,"markerLat":29.4241219,"markerLng":-98.49362819999999,"addressTitle":"Where am I?","addressLine1":"","addressLine2":"San Antonio, Texas","addressCountry":"United States"},"logoImageId":"52f6d3c3e4b0b0787cdf2bf8","shareButtonOptions":{"6":true,"3":true,"1":true,"2":true},"logoImageUrl":"//static.squarespace.com/static/50b76babe4b05c3cd8bab78a/t/52f6d3c3e4b0b0787cdf2bf8/1417435076183/","authenticUrl":"http://jessenoller.com","baseUrl":"http://jessenoller.com","primaryDomain":"jessenoller.com","socialAccounts":[{"serviceId":2,"userId":"638520199","userName":"jessenoller","screenname":"Jesse Noller","addedOn":1354198256316,"profileUrl":"http://www.facebook.com/638520199","iconUrl":"http://graph.facebook.com/638520199/picture?type=square","metaData":{"service":"facebook"},"iconEnabled":true,"serviceName":"facebook"},{"serviceId":4,"userId":"14100497","userName":"jessenoller","screenname":"jessenoller","addedOn":1354198265104,"profileUrl":"https://twitter.com/jessenoller","iconUrl":"http://a0.twimg.com/profile_images/2290396043/tyd6sk9rxwjz4cabirqq_normal.jpeg","collectionId":"50b76cf9e4b05c3cd8baba61","iconEnabled":true,"serviceName":"twitter"},{"serviceId":5,"userId":"115662513673837016240","userName":"Jesse Noller","screenname":"Jesse Noller","addedOn":1354198277258,"profileUrl":"https://plus.google.com/115662513673837016240","iconUrl":"http://www.google.com/ig/c/photos/private/AIbEiAIAAABECLDpg9a-ppuu2QEiC3ZjYXJkX3Bob3RvKigzMjQyNjM0MWMyYzE1Y2QzZTFmOGMxMDRiMGZjMzA1YjFlYjE2YzgxMAEmc7H2wfuu5DHXRPg8s3DbQMWRdQ","iconEnabled":true,"serviceName":"google"},{"serviceId":10,"userId":"14993635","userName":"jessenoller","screenname":"jessenoller","addedOn":1354198318822,"profileUrl":"http://instagram.com/jessenoller","iconUrl":"http://images.instagram.com/profiles/profile_14993635_75sq_1323476427.jpg","collectionId":"50b76d2ee4b05c3cd8babaab","iconEnabled":true,"serviceName":"instagram"},{"serviceId":14,"userId":"gNDIXJa3VW","userName":"jessenoller","screenname":"Jesse Noller","addedOn":1354198347310,"profileUrl":"http://www.linkedin.com/in/jessenoller","iconUrl":"http://m3.licdn.com/mpr/mprx/0_9G8uJ82xPQmxBPxGZFPPJioxP_VjzvOGqQN1JiSauLaDoAdCsXK8B_JhgmsGnt0ac3Ct9k0zgCux","iconEnabled":true,"serviceName":"linkedin"},{"serviceId":20,"userId":"jnoller@gmail.com","screenname":"jnoller@gmail.com","addedOn":1354198361002,"profileUrl":"mailto:jnoller@gmail.com","iconEnabled":true,"serviceName":"email"}],"typekitId":"","statsMigrated":true,"imageMetadataProcessingEnabled":false},"websiteSettings":{"id":"50b76babe4b05c3cd8bab78b","websiteId":"50b76babe4b05c3cd8bab78a","type":"Personal","subject":"Personal","subjects":[{"systemSubject":"other","otherSubject":"Personal"}],"country":"","state":"","markdownMode":true,"simpleLikingEnabled":true,"lastAgreedTermsOfService":2,"defaultPostFormat":"%y/%m/%d/%t","commentLikesAllowed":false,"commentAnonAllowed":false,"commentThreaded":false,"commentApprovalRequired":false,"commentAvatarsOn":false,"commentSortType":2,"commentFlagThreshold":0,"commentFlagsAllowed":false,"commentEnableByDefault":false,"commentDisableAfterDaysDefault":10,"disqusShortname":"pyjesse","notFoundPageId":"50b7714de4b0192bc2226d52","homepageTitleFormat":"%s","collectionTitleFormat":"%c \u2014 %s","itemTitleFormat":"%i \u2014 %s","commentsEnabled":true,"contactEmail":"jnoller@gmail.com","allowSquarespacePromotion":true,"storeSettings":{"returnPolicy":null,"termsOfService":null,"privacyPolicy":null,"expressCheckout":false,"useLightCart":false,"showNoteField":false,"currenciesSupported":["USD"],"defaultCurrency":"USD","selectedCurrency":"USD","measurementStandard":1,"showCustomCheckoutForm":false,"enableMailingListOptInByDefault":true,"stripeConnected":false,"storeState":3,"isLive":false},"useEscapeKeyToLogin":true,"ssBadgeType":1,"ssBadgePosition":4,"ssBadgeVisibility":1,"ssBadgeDevices":1},"websiteCloneable":false,"collection":{"title":"Blog","id":"50b7714be4b0192bc2226c59","fullUrl":"/","publicCommentCount":1567},"item":{"title":"Quick example of extending UserCreationForm in Django","id":"50b772f6e4b0192bc22281d9","fullUrl":"/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django","publicCommentCount":0,"commentState":1,"recordType":1},"subscribed":false,"appDomain":"squarespace.com","secureDomain":"https://jessenoller.squarespace.com","templateTweakable":true,"tweakJSON":{"aspect-ratio":"Auto","gallery-arrow-style":"Round Corners","gallery-aspect-ratio":"3:2 Standard","gallery-auto-crop":"true","gallery-autoplay":"false","gallery-design":"Slideshow","gallery-info-overlay":"Always Show","gallery-loop":"false","gallery-navigation":"Thumbnails","gallery-show-arrows":"true","gallery-transitions":"Fade","galleryArrowBackground":"rgba(34,34,34,1)","galleryArrowColor":"rgba(255,255,255,1)","galleryAutoplaySpeed":"3","galleryCircleColor":"rgba(255,255,255,1)","galleryInfoBackground":"rgba(0, 0, 0, .7)","galleryThumbnailSize":"100px","gridSize":"350px","gridSpacing":"20px","product-gallery-auto-crop":"true","product-image-auto-crop":"true"},"templateId":"4fdf4f21c4aad4a72790bd9b","pageFeatures":[1,2],"impersonatedSession":false,"isFacebookTab":false,"tzData":{"zones":[[-360,"Mexico","C%sT",null]],"rules":{"Mexico":[[2002,"max",null,"Apr","Sun>=1","2:00","1:00","D"],[2002,"max",null,"Oct","lastSun","2:00","0","S"]]}}}; SquarespaceFonts.loadViaContext(); Squarespace.load(window); </script>
+
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://feeds.feedburner.com/Jessenollercom">
+<script type="text/javascript" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/1SuMMYM6U0I6IP8pYtC7okbXk4CI7HZ2ntRzdDGLz66fe7IffFHN4UJLFRbh52jhWD93jRShjcBKZQsKw2mRwhFq5e4yjRStjsTi-cmDShm0dhUCZWJ0jhNlOYiaiko7ZWFDZAozdeU8SKoRdhXC-cmDShm0dhUCZWJ0SaBujW48Sagyjh90jhNlOfG0-cmDShm0dhUCZWJ0SaBujW48Sagyjh90jhNlJ6U3ScNt-AuyOAozicI7fbKnMsMM.js"></script>
+<link rel="stylesheet" href="http://use.typekit.net/c/81f5cc/1w;proxima-nova,2,b5v:R:i3,b5x:R:i4,b5z:R:i6,b61:R:i7,b63:R:i8,b65:R:i9,b5r:R:n1,b5t:R:n3,b5w:R:n4,b5y:R:n6,bBh:R:n7,b62:R:n8,b64:R:n9/d?3bb2a6e53c9684ffdc9a9bf2195b2a62ec19c67c2541de178ac90e2797818e3db88285a8dfb9cd7e8d0d232272a70bfdda82ee8c56296017447736d841cf310a51ba664d27a32304d94216c76574e1382f6abbf38b18441a0ccbeafb4bbd1fce80874167dda89782741afffd1b1aa62bf0bb255f8e81350e9fa6e265776100c25635da04fa39287c4adcfcefc921be"><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/css">
+<!--[if gte IE 9]> <link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&part=1"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&part=2"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&part=3"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&part=4"/><![endif]-->
+<!--[if lt IE 9]><script src="//static.squarespace.com"></script><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&noMedia=true&part=1"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&noMedia=true&part=2"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&noMedia=true&part=3"/><link rel="stylesheet" type="text/css" href="//static.squarespace.com/static/sitecss/50b76babe4b05c3cd8bab78a/12/4fdf4f21c4aad4a72790bd9b/50b76bace4b05c3cd8bab841/847/1391924533425/site.css?&filterFeatures=false&noMedia=true&part=4"/><![endif]-->
+<!--[if !IE]> --><link rel="stylesheet" type="text/css" href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/site.css"><!-- <![endif]-->
+<link href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/prettify.css" type="text/css" rel="stylesheet">
+
+<script src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/prettify.js" type="text/javascript"></script><script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-1971220-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script><!-- End of Squarespace Headers -->
+  <script src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/alfie.f51946af45e0b561c60f768335c9eb79.js" async="" charset="UTF-8"></script></head>
+  
+  <body class="border-style-solid show-social-icons social-icon-style-square  nav-position-fixed show-promoted-blocks show-author-name show-post-date  gallery-design-slideshow aspect-ratio-auto lightbox-style-dark gallery-navigation-thumbnails gallery-info-overlay-always-show gallery-aspect-ratio-32-standard gallery-arrow-style-round-corners gallery-transitions-fade gallery-show-arrows gallery-auto-crop   product-list-titles-under product-list-alignment-center product-item-size-11-square product-image-auto-crop product-gallery-size-11-square product-gallery-auto-crop show-product-price show-product-item-nav product-social-sharing   event-thumbnails event-thumbnail-size-32-standard event-date-label event-date-label-time event-list-show-cats event-list-date event-list-time event-list-address   event-icalgcal-links  event-excerpts  event-item-back-link      opentable-style-light newsletter-style-dark small-button-style-solid small-button-shape-square medium-button-style-solid medium-button-shape-square large-button-style-solid large-button-shape-square button-style-default button-corner-style-square native-currency-code-usd view-item collection-type-blog collection-layout-default collection-50b7714be4b0192bc2226c59 mobile-style-available logged-out" id="item-50b772f6e4b0192bc22281d9">
+    <div id="canvasWrapper">
+
+      <div id="headerWrapper">
+        <!-- ghost version of the nav. pushes header down the correct amount for the real fixed position version of the header -->
+        <div id="navWrapperGhost">
+          <div id="topNavGhost">
+            
+            
+              <div id="sqs-header-social-ghost">
+                <a href="http://www.facebook.com/638520199" target="_blank" class="social-facebook"></a><a href="https://twitter.com/jessenoller" target="_blank" class="social-twitter"></a><a href="https://plus.google.com/115662513673837016240" target="_blank" class="social-google"></a><a href="http://instagram.com/jessenoller" target="_blank" class="social-instagram"></a><a href="http://www.linkedin.com/in/jessenoller" target="_blank" class="social-linkedin"></a><a href="mailto:jnoller@gmail.com" target="_blank" class="social-email"></a>
+              </div>
+              <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#sqs-header-social-ghost" id="mobile-show-social-ghost"></a>
+              
+            
+            <a href="http://jessenoller.com/search" class="search-button" data-source="template" boost_title="10">
+              <span class="title">Search</span>
+            </a>
+
+            <div id="navGhost">
+
+<nav class="main-nav dropdown-hover" id="mainNavigation">
+  <ul>
+  
+    
+
+      <li class="blog-collection active-link">
+
+        
+
+          
+            <a href="http://jessenoller.com/">Blog</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/about/">About</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/other-writing/">Other Writing</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/favorite-posts/">Favorite Posts</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/good-to-great-python-reads/">Good to Great Python reads</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/python-software-foundation/">Python Software Foundation</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="http://jessenoller.com/contact/">Contact</a>
+          
+
+          
+
+        
+
+      </li>
+
+    
+  
+  </ul>
+</nav>
+
+            <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#closeNavGhost" id="mobile-close-nav-ghost">Close</a></div>
+            <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#navGhost" id="mobile-show-nav-ghost">Menu</a>
+          </div>
+        </div>
+        <!-- /ghost nav -->
+
+        <!-- real/visible nav starts here -->
+        <div id="navWrapper">
+          <div id="topNav">
+          
+            
+              <div id="sqs-header-social" data-content-field="connected-accounts">
+                <a href="http://www.facebook.com/638520199" target="_blank" class="social-facebook"></a><a href="https://twitter.com/jessenoller" target="_blank" class="social-twitter"></a><a href="https://plus.google.com/115662513673837016240" target="_blank" class="social-google"></a><a href="http://instagram.com/jessenoller" target="_blank" class="social-instagram"></a><a href="http://www.linkedin.com/in/jessenoller" target="_blank" class="social-linkedin"></a><a href="mailto:jnoller@gmail.com" target="_blank" class="social-email"></a>
+              </div>
+              <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#sqs-header-social" id="mobile-show-social"></a>
+              
+            
+            <a href="http://jessenoller.com/search" class="search-button" boost_title="10">
+              <span class="title">Search</span>
+            </a>
+            
+
+  <div id="nav">
+    <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#closeNav" id="mobile-close-nav">Close</a>
+
+    <nav class="main-nav dropdown-hover" id="mainNavigation" data-content-field="navigation">
+      <ul>
+      
+        
+
+          <li class="blog-collection active-link">
+
+            
+
+              
+                <a href="http://jessenoller.com/">Blog</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/about/">About</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/other-writing/">Other Writing</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/favorite-posts/">Favorite Posts</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/good-to-great-python-reads/">Good to Great Python reads</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/python-software-foundation/">Python Software Foundation</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+
+          <li class="page-collection">
+
+            
+
+              
+                <a href="http://jessenoller.com/contact/">Contact</a>
+              
+
+              
+
+            
+
+          </li>
+
+        
+      
+      </ul>
+    </nav>
+
+  </div>
+
+  
+    <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#nav" id="mobile-show-nav">Menu</a>
+  
+
+          </div>
+        </div>
+
+    		<header id="header">
+          <div id="logo">
+          
+            <h1 class="logo image" data-content-field="site-title">
+              <a href="http://jessenoller.com/">
+                
+                  <img src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/saved_resource" alt="jesse noller - a blog">
+                
+              </a>
+            </h1>
+            
+            <p class="logo-subtitle">python, programming, technology &amp; stuff.</p>
+            
+          
+          </div>
+    		</header>
+  		</div> <!-- /#headerWrapper -->
+
+  		<div id="contentWrapper" role="main">
+    		<section id="page" data-content-field="main-content">
+
+          <!-- // CATEGORY NAV -->
+          
+
+          <article class="hentry category-programming category-python author-jesse post-type-text" id="article-50b772f6e4b0192bc22281d9" data-item-id="50b772f6e4b0192bc22281d9">
+
+  <!--POST HEADER-->
+  <header>
+    <div class="date">
+      <time class="published" datetime="2011-12-19">
+        December 19, 2011
+      </time>
+    </div>
+    
+    <h1 class="entry-title">
+      
+        <a href="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/Quick example of extending UserCreationForm in Django — jesse noller - a blog.html">Quick example of extending UserCreationForm in Django</a>
+      
+    </h1>
+    
+    <p class="author-categories"><span class="blog-author">by <a href="http://jessenoller.com/?author=50b76e12e4b0cca10d7c421a">jesse</a></span><span class="categories"> in <a href="http://jessenoller.com/?category=Programming" rel="tag">Programming</a>, <a href="http://jessenoller.com/?category=Python" rel="tag">Python</a></span></p>
+  </header>
+
+  <hr class="short-line">
+
+  <div class="content-area">
+    <!--SPECIAL CONTENT-->
+    
+
+    <!--POST BODY-->
+    <div class="body entry-content">
+      
+    	<div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Post Body" data-type="item" id="item-50b772f6e4b0192bc22281d9"><div class="row sqs-row"><div class="col sqs-col-12 span-12"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-50b772f6e4b0192bc22281d8"><div class="sqs-block-content"><p>I just banged my head against this, and with no good answers floating around out there, I thought I'd share. In my case, I just wanted to extend the basic <strong>django.contrib.auth.forms.UserCreationForm</strong> in order to make it so when a user was added, an email address had to be supplied in addition to the username and password fields.</p>
+<p>Here is a working example (<strong>forms.py</strong>) - just so I don't forget it:</p>
+<pre lang="python">from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class UserCreateForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user</pre>
+<p>You have to modify the save method on the form to add the email to user object returned by the super call. You can use this to expose other fields on the User object as needed.</p></div></div></div></div></div>
+      
+      <div class="sqs-post-entry"></div>
+    </div>
+  </div>
+
+  <!--POST FOOTER-->
+    <footer>
+      <div class="">
+        <div class="comment-share-like">
+          
+          
+            
+              <a href="http://jessenoller.com/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django#comments" class="comment-link">Comment</a>
+              
+            
+          
+          
+          <span class="squarespace-social-buttons inline-style" data-system-data-id="" data-asset-url="http://static.squarespace.com/static/50b76babe4b05c3cd8bab78a/50b7714be4b0192bc2226c59/50b772f6e4b0192bc22281d9/1324290912000/" data-record-type="1" data-full-url="/blog/2011/12/19/quick-example-of-extending-usercreationform-in-django" data-title="Quick example of extending UserCreationForm in Django"><div id="social-yui_3_17_2_1_1418237463933_173" class="yui3-widget yui3-socialbutton"><div id="yui_3_17_2_1_1418237463933_178" class="yui3-socialbutton-content"><div class="ss-social-button-wrapper"><div class="ss-social-button"><span class="ss-social-button-icon"></span>Share</div></div><div class="ss-social-list-wrapper"><div class="ss-social-button-list"></div></div></div></div></span>
+
+          <span class="sqs-simple-like" data-item-id="50b772f6e4b0192bc22281d9" data-like-count="19" id="yui_3_17_2_1_1418237463933_168"><span class="like-icon"></span><span class="like-count">19 Likes</span></span>
+
+        </div>
+
+        
+
+      </div>
+    </footer>
+
+  <hr class="short-line">
+
+</article>
+
+
+<!--PAGINATION-->
+
+<nav class="pagination">
+  <ul>
+    <li class="previous"><a href="http://jessenoller.com/blog/2011/12/30/2011-in-review-the-personal-portion"><span class="fs1 arrow-prev" aria-hidden="true" data-icon="&quot;"></span>Previous Post<br><span class="page-title">2011 in review: The ...</span></a></li>
+    <li class="next"><a href="http://jessenoller.com/blog/2011/12/09/porting-to-python-3-an-offer-for-you">Next Post<br><span class="page-title">Porting to Python 3: An ...</span><span class="fs1 arrow-next" aria-hidden="true" data-icon="!"></span></a></li>
+  </ul>
+</nav>
+
+
+<!-- COMMENTS -->
+
+<section id="comments-50b76babe4b05c3cd8bab78a" class="comments-wrapper">
+  <div class="squarespace-comments" id="disqus_thread"><iframe id="dsq-2" data-disqus-uid="2" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Quick example of extending UserCreationForm in Django — jesse noller - a blog_files/saved_resource.html" horizontalscrolling="no" verticalscrolling="no" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 1284px !important;"></iframe></div>
+</section>
+
+    		</section>
+  		</div>
+
+      <footer id="pageFooter">
+        <div class="sqs-cart-dropzone"><div id="yui_3_17_2_1_1418237463933_223" class="yui3-widget sqs-widget sqs-pill-shopping-cart sqs-scalable-hidden" style="visibility: hidden; opacity: 0; transform: scale(0.94);"><div id="yui_3_17_2_1_1418237463933_225" class="sqs-pill-shopping-cart-content dark"><div class="icon"></div>
+
+<div class="details">
+  Cart&nbsp;-&nbsp;
+    <span class="total-quantity">0</span>
+    <span class="suffix">items</span>
+</div>
+
+<span class="subtotal">
+  <span class="price"><span class="sqs-money-native">0.00</span></span>
+</span></div></div></div>
+        <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Footer Content" data-type="block-field" data-updated-on="1354245882140" id="footerBlock"><div class="row sqs-row"><div class="col sqs-col-12 span-12"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-5dfb622ffb3ab97eed56"><div class="sqs-block-content"><p class="text-align-center"><em>This work is licensed under a&nbsp;<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/deed.en_US" data-link-type="external">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 United States License</a>.</em></p></div></div></div></div></div>
+        <script type="text/javascript" data-sqs-type="imageloader">(function() {var SQUARESPACE_SIZES=[1500,1E3,750,500,300,100],IMAGE_LOADING_CLASS="loading",ImageLoader=new function(){this.load=function(a,b){function c(a,b,c){var d=new Image;d.onload=b;d.onerror=c;d.src=a}a.getDOMNode&&(a=a.getDOMNode());var d=this._getDataFromNode(a,b),e=!(!d.dimensions||!d.dimensions.width||!d.dimensions.height),l=d.load+"";if("false"===l)return!1;var g=d.mode;if(e&&("fit"==g||"fill"==g)){g=a.parentNode;if(!g)return console.error("Not doing anything, parentNode not found."),!1;if(!this.refresh(a,
+b,g))return!1}var n=this._intendToLoad(a,d);if("string"==typeof n&&"viewport"!==l){var m=this.getUrl(n,d),d=a.getAttribute("data-image-resolution");a.getAttribute("src")!==m&&this.isValidResolution(n,d)&&(a.onload=function(){a.className=a.className.replace(IMAGE_LOADING_CLASS," ").trim();a.setAttribute("data-image-resolution",n)},!a.getAttribute("src")&&-1===a.className.indexOf(IMAGE_LOADING_CLASS)&&(a.className+=(a.className?" ":"")+IMAGE_LOADING_CLASS),!a.getAttribute("src")&&e?a.setAttribute("src",
+m):c(m,function(){e?a.setAttribute("src",m):(a.setAttribute("data-image-dimensions",this.width+"x"+this.height),ImageLoader.load(a,b))},function(){a.className=a.className.replace(IMAGE_LOADING_CLASS," ").trim();a.setAttribute("src",m)}));return!0}return n};this.refresh=function(a,b,c){a.getDOMNode&&(a=a.getDOMNode());c&&c.getDOMNode&&(c=c.getDOMNode());c=c||a.parentNode;if(!c)return console.error("Not doing anything, parentNode not found."),!1;var d=this._getDataFromNode(a,b),e=c.offsetWidth,l=c.offsetHeight;
+b=d.mode;if("none"!=b){var g=d.dimensions.width,n=d.dimensions.height,m=g/n,q=e/l;if(d.fixedRatio)"fill"==b&&q>m||"fit"==b&&q<m?(h=100,k=100*(q/m),r=(100-k)*d.focalPoint.y,p=0):(h=100*(m/q),k=100,r=0,p=(100-h)*d.focalPoint.x),a.style.top=r+"%",a.style.left=p+"%",a.style.width=h+"%",a.style.height=k+"%";else{var f;"fill"===b?f=m>q?l/n:e/g:"fit"===b&&(f=m<q?l/n:e/g);!d.stretch&&("fit"==b&&1<f)&&(f=1);var h=Math.ceil(g*f),k=Math.ceil(n*f);if(0===h||0===k)return!1;var p,r;"fill"===b?(p=Math.min(Math.max(e/
+2-h*d.focalPoint.x,e-h),0),r=Math.min(Math.max(l/2-k*d.focalPoint.y,l-k),0)):"fit"===b&&(f=d.fitAlignment,p=f.left?0:f.right?e-h:h<e?(e-h)/2:0,r=f.top?0:f.bottom?l-k:k<l?(l-k)/2:0,"inline"==this._getStyle(a,"display")&&(a.style.fontSize="0px"),this._resetAlt(a,function(){h-=a.offsetHeight-a.clientHeight;k-=a.offsetWidth-a.clientWidth}));a.style.top=Math.ceil(r)+"px";a.style.left=Math.ceil(p)+"px";a.style.width=Math.ceil(h)+"px";a.style.height=Math.ceil(k)+"px"}p=this._getStyle(c,"position");a.style.position=
+"relative"==p?"absolute":"relative";if("fill"==b&&(b=this._getStyle(c,"overflow"),!b||"hidden"!=b))c.style.overflow="hidden";return!0}};this._intendToLoad=function(a,b){function c(c,d){"none"===b.mode&&(a.style.width=null,a.style.height=null);var e=parseFloat(a.getAttribute(c)),f=parseFloat(e);if(!f||isNaN(f))e=g._getStyle(a,c),f=parseFloat(e);if(!f||isNaN(f))e=g._getStyle(a,"max-"+c,"max"+(c.substr(0,1).toUpperCase()+c.substr(1))),f=parseFloat(e);if(0===d||e)switch(g._stringType(e)){case "percentage":d=
+parseInt(e,10)/100*l["offset"+c.substr(0,1).toUpperCase()+c.substr(1)];break;case "number":d=parseInt(e,10)}!f&&(0!==d&&!a.getAttribute("src"))&&(d=0);return d}b=b||this._getDataFromNode(a);if(!b.source)return!1;var d=a.offsetWidth,e=a.offsetHeight,l=a.parentNode,g=this;this._resetAlt(a,function(){d=c("width",d);e=c("height",e)});0===d&&0===e?(d=b.dimensions.width,e=b.dimensions.height):0===d?d=this.getDimensionForValue("width",e,b):0===e&&(e=this.getDimensionForValue("height",d,b));"viewport"===
+b.load&&(a.style.width=Math.floor(d)+"px",a.style.height=Math.floor(e)+"px");return this.getSquarespaceSize(d,e,b)};this._getDataFromNode=function(a,b){b=b||{};var c={focalPoint:{x:0.5,y:0.5},dimensions:{width:null,height:null},mode:"none",fitAlignment:{center:!0},load:"true",stretch:!0,fixedRatio:!1};if(b.focalPoint)c.focalPoint=b.focalPoint;else{var d=a.getAttribute("data-image-focal-point");if(d&&(d=d.split(","))&&2==d.length)c.focalPoint={x:parseFloat(d[0]),y:parseFloat(d[1])}}if(b.dimensions)c.dimensions=
+b.dimensions;else if((d=a.getAttribute("data-image-dimensions"))&&(d=d.split("x"))&&2==d.length)c.dimensions={width:parseInt(d[0],10),height:parseInt(d[1],10)};b.mode?c.mode=b.mode:a.parentNode&&(d=a.parentNode.className,-1!==d.indexOf("content-fill")?c.mode="fill":-1!==d.indexOf("content-fit")&&(c.mode="fit"));if("fit"===c.mode&&a.parentNode&&(d=b.fitAlignment||a.getAttribute("data-alignment")||a.parentNode.getAttribute("data-alignment")))c.fitAlignment={top:-1!==d.indexOf("top"),left:-1!==d.indexOf("left"),
+center:-1!==d.indexOf("center"),right:-1!==d.indexOf("right"),bottom:-1!==d.indexOf("bottom")};if(b.load)c.load=b.load;else if(d=a.getAttribute("data-load"))c.load=d;if("undefined"!==typeof b.stretch)c.stretch=b.stretch;else if(d=a.getAttribute("data-image-stretch"))c.stretch="true"===d?!0:!1;c.source=b.source?b.source:a.getAttribute("data-src");if(c.source&&(-1!==c.source.indexOf("squarespace.com")||-1!==c.source.indexOf("squarespace.net"))&&"http:"===c.source.substr(0,5)&&"https"===window.location.protocol.substr(0,
+5))c.source=c.source.replace("http://","https://");if(b.fixedRatio)c.fixedRatio=b.fixedRatio;else if(d=a.getAttribute("data-fixed-ratio"))c.fixedRatio="true"==d;return c};this._stringType=function(a){return"string"===typeof a&&-1!==a.indexOf("%")?"percentage":isNaN(parseInt(a,10))?NaN:"number"};this._getStyle=function(a,b,c){var d;a.currentStyle?d=a.currentStyle[c||b]:window.getComputedStyle&&(d=document.defaultView.getComputedStyle(a,null).getPropertyValue(b));return d};this._isVisible=function(a){a=
+a.getBoundingClientRect();return 0<=a.left&&0<=a.top||0<=a.bottom&&0<=a.right||0<=a.left&&0<=a.bottom||0<=a.right&&0<=a.top};this.getSquarespaceSize=function(a,b,c){a=Math.max(b/(c.dimensions.height/c.dimensions.width),a);"number"==typeof window.devicePixelRatio&&(a*=window.devicePixelRatio);for(b=1;b<SQUARESPACE_SIZES.length&&!(a>SQUARESPACE_SIZES[b]);b++);return SQUARESPACE_SIZES[b-1]+"w"};this.getDimensionForValue=function(a,b,c){var d=c.dimensions.width;c=c.dimensions.height;return"width"==a?
+d/c*b:"height"==a?c/d*b:NaN};this.getUrl=function(a,b){var c=b.source;return a&&("/"==c[0]||-1!=c.indexOf("squarespace.com")||-1!=c.indexOf("squarespace.net"))?(-1===c.indexOf("format="+a)&&(c=c+(-1!==c.indexOf("?")?"&":"?")+"format="+a),window.Static&&(window.Static.IN_BACKEND&&-1===c.indexOf("storage=local"))&&(c+="&storage=local"),c):b.source};this.isValidResolution=function(a,b){a=parseInt(a,10);b=parseInt(b,10);return isNaN(a)||isNaN(b)?!0:a>b};this._resetAlt=function(a,b){var c=a.getAttribute("alt"),
+d=c&&0<c.length&&!a.getAttribute("src");if(d){var e=a.style.display;a.removeAttribute("alt");a.style.display="none";a.offsetHeight+0;a.style.display=e}b.call(this);d&&a.setAttribute("alt",c)}};window.ImageLoader=ImageLoader;var siteCSSHandle,loopHandle,imagesTimer=50;function ancestorHasClass(a,b){return"undefined"!==typeof a.className&&-1!==a.className.indexOf(b)?!0:a.parentNode?ancestorHasClass(a.parentNode,b):!1}
+var hasAttr=function(a,b){return a.hasAttribute?a.hasAttribute(b):!!a.attributes[b]},getAttr=function(a,b){return a.getAttribute?a.getAttribute(b):a.attributes[b]};function init(){var a=document.images;if(0<a.length)for(var b=0,c=a.length;b<c;b++)(hasAttr(a[b],"data-image")||hasAttr(a[b],"data-src"))&&"false"!==getAttr(a[b],"data-load")+""&&ImageLoader.load(a[b])}init();window.YUI&&YUI.add("squarespace-imageloader",function(a){});
+})();</script>
+<script>Squarespace.afterBodyLoad(Y);</script>
+      </footer>
+
+    </div> <!-- /#canvasWrapper -->
+
+  
+
+  
+
+</body></html>
