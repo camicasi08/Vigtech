@@ -16,9 +16,10 @@ class Migration(migrations.Migration):
             name='proyecto',
             fields=[
                 ('id_proyecto', models.AutoField(serialize=False, primary_key=True)),
-                ('titulo', models.CharField(max_length=200, db_column=b'nombre_proyecto')),
+                ('nombre', models.CharField(max_length=200, db_column=b'nombre_proyecto')),
                 ('calificacion', models.IntegerField()),
                 ('fraseBusqueda', models.CharField(max_length=200, db_column=b'busqueda')),
+                ('disponibilidad', models.CharField(max_length=200, db_column=b'disponibilidad', choices=[(b'PUBLICO', b'Publico'), (b'PRIVADO', b'Privado')])),
                 ('idUsuario', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'fk_usuario')),
             ],
             options={

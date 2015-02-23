@@ -1,3 +1,4 @@
+
 -Añadir Logo UV al banner
 -Gestión de Proyectos
 	-Crear Proyectos
@@ -18,4 +19,7 @@ Proyecto (Visibilidad){
 		mapas (red etc...)
 	}
 
+Cambiar nombre de directorio cuando se edita el nombre.
+
+172.17.9.1
 

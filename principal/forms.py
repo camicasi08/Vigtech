@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from principal.models import *
+from django.utils.translation import ugettext_lazy as _
 #from django.contrib.auth.models import User
 
 
@@ -10,7 +11,7 @@ from principal.models import *
 #	fields=['first_name', 'last_name', 'username', 'email', 'password']
 class UniqueUserEmailField(forms.EmailField):
     """
-    An EmailField which only is valid if no User has that email.
+    An EmailField which only is valid esr-gobernanza@renata.edu.coif no User has that email.
     """
     def validate(self, value):
         super(forms.EmailField, self).validate(value)
@@ -35,7 +36,10 @@ class FormularioRegistrarUsuario(UserCreationForm):
 	class Meta:
 		model=User
 		fields=['nombres', 'apellidos', 'username', 'email', 'password1', 'password2']
-		exclude=['username.help_text']
+		#exclude=['username.help_text']
+		help_texts = {
+			'username': _('Help text'),
+		}
 
 	def save(self,commit=True):
 		user = super(UserCreationForm,self).save(commit=False)
@@ -46,3 +50,10 @@ class FormularioRegistrarUsuario(UserCreationForm):
 			user.save()
 		return user
 
+class FormularioCrearProyecto(ModelForm):
+	class Meta:
+		model=proyecto
+		fields=['nombre',  'resumen']
+	def __init__(self, *args, **kwargs):
+		super(FormularioCrearProyecto, self).__init__(*args, **kwargs)
+		self.fields['nombre'].label= "Título del proyecto"	
